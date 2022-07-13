@@ -9,7 +9,7 @@ import com.example.moviereviewsystem.models.Director;
 @Component
 public interface IDirectorService {
 	
-	public Director getDirectory(Long directorId);
+	public Director getDirector(Long directorId);
 	
 	public List<Director> getAllDirectors();
 	
