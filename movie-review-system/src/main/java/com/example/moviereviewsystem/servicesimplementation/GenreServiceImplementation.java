@@ -1,4 +1,4 @@
-package servicesImplementation;
+package com.example.moviereviewsystem.servicesimplementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Genre;
-
-import repositories.IGenreRepository;
-import services.IGenreService;
+import com.example.moviereviewsystem.repositories.IGenreRepository;
+import com.example.moviereviewsystem.services.IGenreService;
 
 @Service
 public class GenreServiceImplementation implements IGenreService{

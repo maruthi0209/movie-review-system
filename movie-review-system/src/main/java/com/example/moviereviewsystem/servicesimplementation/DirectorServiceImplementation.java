@@ -1,4 +1,4 @@
-package servicesImplementation;
+package com.example.moviereviewsystem.servicesimplementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Director;
-
-import repositories.IDirectorRepository;
-import services.IDirectorService;
+import com.example.moviereviewsystem.repositories.IDirectorRepository;
+import com.example.moviereviewsystem.services.IDirectorService;
 
 @Service
 public class DirectorServiceImplementation implements IDirectorService{

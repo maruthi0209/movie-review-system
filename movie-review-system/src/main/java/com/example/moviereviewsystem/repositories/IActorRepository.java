@@ -1,4 +1,4 @@
-package repositories;
+package com.example.moviereviewsystem.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package servicesImplementation;
+package com.example.moviereviewsystem.servicesimplementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Movie;
-
-import repositories.IMovieRepository;
-import services.IMovieService;
+import com.example.moviereviewsystem.repositories.IMovieRepository;
+import com.example.moviereviewsystem.services.IMovieService;
 
 @Service
 public class MovieServiceImplementation implements IMovieService{

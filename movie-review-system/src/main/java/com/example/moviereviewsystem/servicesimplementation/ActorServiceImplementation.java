@@ -1,4 +1,4 @@
-package servicesImplementation;
+package com.example.moviereviewsystem.servicesimplementation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Actor;
-
-import repositories.IActorRepository;
-import services.IActorService;
+import com.example.moviereviewsystem.repositories.IActorRepository;
+import com.example.moviereviewsystem.services.IActorService;
 
 @Service
 public class ActorServiceImplementation implements IActorService {
