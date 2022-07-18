@@ -6,6 +6,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Studio;
@@ -20,37 +22,42 @@ public class StudioServiceImplementation implements IStudioService{
 
 	@Override
 	@Transactional
-	public Studio getStudio(Long studioId) {
+	public ResponseEntity<Studio> getStudio(Long studioId) {
 		Studio studio = iStudioRepository.getReferenceById(studioId);
-		return studio;
+		ResponseEntity<Studio> response = new ResponseEntity<Studio>(studio, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public List<Studio> getAllStudio() {
+	public ResponseEntity<List<Studio>> getAllStudio() {
 		List<Studio> studiosList = new ArrayList<Studio>();
 		studiosList = iStudioRepository.findAll();
-		return studiosList;
+		ResponseEntity<List<Studio>> response = new ResponseEntity<List<Studio>>(studiosList, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Studio createStudio(Studio studio) {
+	public ResponseEntity<Studio> createStudio(Studio studio) {
 		Studio savedStudio = iStudioRepository.save(studio);
-		return savedStudio;
+		ResponseEntity<Studio> response = new ResponseEntity<Studio>(savedStudio, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Studio updateStudio(Studio studio) {
+	public ResponseEntity<Studio> updateStudio(Studio studio) {
 		if (iStudioRepository.existsById(studio.getStudioId())) {
 			Studio existingStudio = iStudioRepository.getReferenceById(studio.getStudioId());
 			existingStudio.setStudioName(studio.getStudioName());
 			existingStudio.setStudioLocation(studio.getStudioLocation());
 			Studio savedStudio = iStudioRepository.save(existingStudio);
-			return savedStudio;
+			ResponseEntity<Studio> response = new ResponseEntity<Studio>(savedStudio, HttpStatus.OK);
+			return response;
 		} else {
-			return studio;
+			ResponseEntity<Studio> failedresponse = new ResponseEntity<Studio>(studio, HttpStatus.OK);
+			return failedresponse;
 		}
 	}
 

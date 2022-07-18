@@ -6,6 +6,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Director;
@@ -20,36 +22,41 @@ public class DirectorServiceImplementation implements IDirectorService{
 
 	@Override
 	@Transactional
-	public Director getDirector(Long directorId) {
+	public ResponseEntity<Director> getDirector(Long directorId) {
 		Director director = iDirectorRepository.getReferenceById(directorId);
-		return director;
+		ResponseEntity<Director> response = new ResponseEntity<>(director, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public List<Director> getAllDirectors() {
+	public ResponseEntity<List<Director>> getAllDirectors() {
 		List<Director> directorsList = new ArrayList<Director>();
 		directorsList = iDirectorRepository.findAll();
-		return directorsList;
+		ResponseEntity<List<Director>> response = new ResponseEntity<>(directorsList, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Director createDirector(Director director) {
+	public ResponseEntity<Director> createDirector(Director director) {
 		Director saveddirector = iDirectorRepository.save(director);
-		return saveddirector;
+		ResponseEntity<Director> response = new ResponseEntity<>(saveddirector, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Director updateDirector(Director director) {
+	public ResponseEntity<Director> updateDirector(Director director) {
 		if (iDirectorRepository.existsById(director.getDirectorId())) {
 			Director existingDirector = iDirectorRepository.getReferenceById(director.getDirectorId());
 			existingDirector.setDirectorName(director.getDirectorName());
 			Director updatedDirector = iDirectorRepository.save(existingDirector);
-			return updatedDirector;
+			ResponseEntity<Director> response = new ResponseEntity<>(updatedDirector, HttpStatus.OK);
+			return response;
 		} else {
-			return director;
+			ResponseEntity<Director> failedresponse = new ResponseEntity<>(director, HttpStatus.NOT_MODIFIED);
+			return failedresponse;
 		}
 	}
 

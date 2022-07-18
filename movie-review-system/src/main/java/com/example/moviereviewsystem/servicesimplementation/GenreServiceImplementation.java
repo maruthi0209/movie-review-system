@@ -6,6 +6,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Genre;
@@ -20,36 +22,41 @@ public class GenreServiceImplementation implements IGenreService{
 
 	@Override
 	@Transactional
-	public Genre getGenre(Long genreId) {
+	public ResponseEntity<Genre> getGenre(Long genreId) {
 		Genre genre = iGenreRepository.getReferenceById(genreId);
-		return genre;
+		ResponseEntity<Genre> response = new ResponseEntity<>(genre, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public List<Genre> getAllGenres() {
+	public ResponseEntity<List<Genre>> getAllGenres() {
 		List<Genre> genresList = new ArrayList<Genre>();
 		genresList = iGenreRepository.findAll();
-		return genresList;
+		ResponseEntity<List<Genre>> response = new ResponseEntity<>(genresList, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Genre createGenre(Genre genre) {
+	public ResponseEntity<Genre> createGenre(Genre genre) {
 		Genre savedGenre = iGenreRepository.save(genre);
-		return savedGenre;
+		ResponseEntity<Genre> response = new ResponseEntity<>(savedGenre, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Genre updateGenre(Genre genre) {
+	public ResponseEntity<Genre> updateGenre(Genre genre) {
 		if (iGenreRepository.existsById(genre.getGenreId())) {
 			Genre existingGenre = iGenreRepository.getReferenceById(genre.getGenreId());
 			existingGenre.setGenreDescription(genre.getGenreDescription());
 			Genre updatedGenre = iGenreRepository.save(genre);
-			return updatedGenre;
+			ResponseEntity<Genre> response = new ResponseEntity<>(updatedGenre, HttpStatus.OK);
+			return response;
 		} else {
-			return genre;
+			ResponseEntity<Genre> failedresponse = new ResponseEntity<>(genre, HttpStatus.NOT_MODIFIED);
+			return failedresponse;
 		}
 	}
 

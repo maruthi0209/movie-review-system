@@ -3,7 +3,12 @@ package com.example.moviereviewsystem.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,33 +18,34 @@ import com.example.moviereviewsystem.models.Genre;
 import com.example.moviereviewsystem.services.IGenreService;
 
 @RestController
+@RequestMapping(value = "/genre")
 public class GenreController {
 
 	@Autowired
 	private IGenreService iGenreService;
 	
-	@RequestMapping(value = "/createGenre", method = RequestMethod.POST)
-	public Genre createGenre(@RequestBody Genre genre) {
+	@PostMapping(value = "/createGenre")
+	public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
 		return iGenreService.createGenre(genre);
 	}
 	
-	@RequestMapping(value = "/updateGenre", method = RequestMethod.PUT) 
-	public Genre updateGenre(@RequestBody Genre genre) {
+	@PutMapping(value = "/updateGenre") 
+	public ResponseEntity<Genre> updateGenre(@RequestBody Genre genre) {
 		return iGenreService.updateGenre(genre);
 	}
 	
-	@RequestMapping(value = "/deleteGenre/{genreId}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteGenre/{genreId}")
 	public boolean deleteGenre(@PathVariable Long genreId) {
 		return iGenreService.deleteGenre(genreId);
 	}
 	
-	@RequestMapping(value = "/getGenre/{genreId}", method = RequestMethod.GET)
-	public Genre getGenre(@PathVariable Long genreId) {
+	@GetMapping(value = "/getGenre/{genreId}")
+	public ResponseEntity<Genre> getGenre(@PathVariable Long genreId) {
 		return iGenreService.getGenre(genreId);
 	}
 	
-	@RequestMapping(value = "/getAllGenres", method = RequestMethod.GET)
-	public List<Genre> getAllGenres() {
+	@GetMapping(value = "/getAllGenres")
+	public ResponseEntity<List<Genre>> getAllGenres() {
 		return iGenreService.getAllGenres();
 	}
 }

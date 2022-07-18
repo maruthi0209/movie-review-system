@@ -6,8 +6,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.moviereviewsystem.models.Genre;
 import com.example.moviereviewsystem.models.Movie;
 import com.example.moviereviewsystem.repositories.IMovieRepository;
 import com.example.moviereviewsystem.services.IMovieService;
@@ -20,26 +23,29 @@ public class MovieServiceImplementation implements IMovieService{
 
 	@Override
 	@Transactional
-	public Movie getMovie(Long movieId) {
+	public ResponseEntity<Movie> getMovie(Long movieId) {
 		Movie movie = iMovieRepository.getReferenceById(movieId);
-		return movie;
+		ResponseEntity<Movie> response = new ResponseEntity<>(movie, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
-	public List<Movie> getAllMovies() {
+	public ResponseEntity<List<Movie>> getAllMovies() {
 		List<Movie> moviesList = new ArrayList<Movie>();
 		moviesList = iMovieRepository.findAll();
-		return moviesList;
+		ResponseEntity<List<Movie>> response = new ResponseEntity<>(moviesList, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
-	public Movie createMovie(Movie movie) {
+	public ResponseEntity<Movie> createMovie(Movie movie) {
 		Movie savedMovie = iMovieRepository.save(movie);
-		return savedMovie;
+		ResponseEntity<Movie> response = new ResponseEntity<>(savedMovie, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
-	public Movie updateMovie(Movie movie) {
+	public ResponseEntity<Movie> updateMovie(Movie movie) {
 		if (iMovieRepository.existsById(movie.getMovieId())) {
 			Movie existingMovie = iMovieRepository.getReferenceById(movie.getMovieId());
 			existingMovie.setMovieCast(movie.getMovieCast());
@@ -49,9 +55,11 @@ public class MovieServiceImplementation implements IMovieService{
 			existingMovie.setMoviestudio(movie.getMoviestudio());
 			existingMovie.setReleaseDate(movie.getReleaseDate());
 			Movie updatedMovie = iMovieRepository.save(existingMovie);
-			return updatedMovie;
+			ResponseEntity<Movie> response = new ResponseEntity<>(updatedMovie, HttpStatus.OK);
+			return response;
 		} else {
-			return movie;
+			ResponseEntity<Movie> response = new ResponseEntity<>(movie, HttpStatus.NOT_MODIFIED);
+			return response;
 		}
 	}
 

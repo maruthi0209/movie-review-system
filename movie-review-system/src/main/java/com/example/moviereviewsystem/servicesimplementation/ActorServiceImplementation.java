@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.moviereviewsystem.models.Actor;
@@ -19,36 +21,41 @@ public class ActorServiceImplementation implements IActorService {
 	
 	@Override
 	@Transactional
-	public Actor getActor(Long actorId) {
+	public ResponseEntity<Actor> getActor(Long actorId) {
 		Actor actor = iActorRepository.getReferenceById(actorId);
-		return actor;
+		ResponseEntity<Actor> response = new ResponseEntity<Actor>(actor, HttpStatus.OK);
+		return response;
 		}		
 
 	@Override
 	@Transactional
-	public List<Actor> getAllActors() {
+	public ResponseEntity<List<Actor>> getAllActors() {
 			List<Actor> actorsList = new ArrayList<Actor>();
 			actorsList = iActorRepository.findAll();
-		return actorsList;
+			ResponseEntity<List<Actor>> response = new ResponseEntity<List<Actor>>(actorsList, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Actor createActor(Actor actor) {
+	public ResponseEntity<Actor> createActor(Actor actor) {
 		Actor savedActor = iActorRepository.save(actor);
-		return savedActor;
+		ResponseEntity<Actor> response = new ResponseEntity<Actor>(savedActor, HttpStatus.OK);
+		return response;
 	}
 
 	@Override
 	@Transactional
-	public Actor updateActor(Actor actor) {
+	public ResponseEntity<Actor> updateActor(Actor actor) {
 		if (iActorRepository.existsById(actor.getActorId())) {
 			Actor existingActor = iActorRepository.getReferenceById(actor.getActorId());
 			existingActor.setActorName(actor.getActorName());
 			Actor updatedActor = iActorRepository.save(existingActor);
-			return updatedActor;
+			ResponseEntity<Actor> response = new ResponseEntity<Actor>(updatedActor, HttpStatus.OK);
+			return response;
 		} else {
-			return actor;
+			ResponseEntity<Actor> failedresponse = new ResponseEntity<Actor>(actor, HttpStatus.NOT_MODIFIED);
+			return failedresponse;
 
 		}
 	}

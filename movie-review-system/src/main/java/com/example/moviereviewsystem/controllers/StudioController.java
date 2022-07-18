@@ -3,7 +3,12 @@ package com.example.moviereviewsystem.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,33 +18,34 @@ import com.example.moviereviewsystem.models.Studio;
 import com.example.moviereviewsystem.services.IStudioService;
 
 @RestController
+@RequestMapping(value = "/studio")
 public class StudioController {
 
 	@Autowired
 	private IStudioService iStudioService;
 	
-	@RequestMapping(value = "/createStudio", method = RequestMethod.POST)
-	public Studio createStudio(@RequestBody Studio studio) {
+	@PostMapping(value = "/createStudio")
+	public ResponseEntity<Studio> createStudio(@RequestBody Studio studio) {
 		return iStudioService.createStudio(studio);
 	}
 	
-	@RequestMapping(value = "/updateStudio", method = RequestMethod.PUT)
-	public Studio updateStudio (@RequestBody Studio studio) {
+	@PutMapping(value = "/updateStudio")
+	public ResponseEntity<Studio> updateStudio (@RequestBody Studio studio) {
 		return iStudioService.updateStudio(studio);
 	}
 	
-	@RequestMapping(value = "/deleteStudio/{studioId}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteStudio/{studioId}")
 	public boolean deleteStudio(@PathVariable Long studioId) {
 		return iStudioService.deleteStudio(studioId);
 	}
 	
-	@RequestMapping(value = "/getStudio/{studioId}", method = RequestMethod.GET)
-	public Studio getStudio(@PathVariable Long studioId) {
+	@GetMapping(value = "/getStudio/{studioId}")
+	public ResponseEntity<Studio> getStudio(@PathVariable Long studioId) {
 		return iStudioService.getStudio(studioId);
 	}
 	
-	@RequestMapping(value = "/getAllStudios", method = RequestMethod.GET) 
-	public List<Studio> getAllStudios() {
+	@GetMapping(value = "/getAllStudios") 
+	public ResponseEntity<List<Studio>> getAllStudios() {
 		return iStudioService.getAllStudio();
 	}
 }

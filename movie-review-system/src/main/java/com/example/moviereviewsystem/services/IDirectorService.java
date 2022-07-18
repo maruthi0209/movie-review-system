@@ -2,6 +2,7 @@ package com.example.moviereviewsystem.services;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.example.moviereviewsystem.models.Director;
@@ -9,13 +10,13 @@ import com.example.moviereviewsystem.models.Director;
 @Component
 public interface IDirectorService {
 	
-	public Director getDirector(Long directorId);
+	public ResponseEntity<Director> getDirector(Long directorId);
 	
-	public List<Director> getAllDirectors();
+	public ResponseEntity<List<Director>> getAllDirectors();
 	
-	public Director createDirector(Director director);
+	public ResponseEntity<Director> createDirector(Director director);
 	
-	public Director updateDirector(Director director);
+	public ResponseEntity<Director> updateDirector(Director director);
 	
 	public boolean deleteDirector(Long directorId);
 
